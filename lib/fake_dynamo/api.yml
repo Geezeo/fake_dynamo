@@ -551,24 +551,24 @@
                   BS:
                   - :list:
                     - :blob
-            ComparisonOperator:
-            - :string
-            - :required
-            - :enum: [EQ, NE, LE, LT, GE, GT, NOT_NULL, 'NULL', CONTAINS, NOT_CONTAINS, BEGINS_WITH, IN, BETWEEN]
-    ExclusiveStartKey:
-    - :map:
-        :key:
-        - :string
-        :value:
-        - :structure:
-            S:
-            - :string
-            N:
-            - :string
-            B:
-            - :blob
-            SS:
-            - :list:
+                    SS:
+                    - :list:
+                      - :string
+                    NS:
+                    - :list:
+                      - :string
+                    BS:
+                    - :list:
+                      - :blob
+              ComparisonOperator:
+              - :string
+              - :required
+              - :enum: [EQ, NE, LE, LT, GE, GT, NOT_NULL, "NULL", CONTAINS, NOT_CONTAINS, BEGINS_WITH, IN, BETWEEN]
+      ExclusiveStartKey:
+      - :structure:
+          HashKeyElement:
+          - :structure:
+              S:
               - :string
             NS:
             - :list:

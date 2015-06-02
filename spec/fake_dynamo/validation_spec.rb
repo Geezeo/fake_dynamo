@@ -74,6 +74,15 @@ module FakeDynamo
           end.to raise_error(ValidationException, message)
         end
       end
+
+      it 'should allow null comparison operator' do
+        subject.validate_payload('Scan', {
+          'TableName' => 'Table1',
+          'ScanFilter' => {
+            'age' => { 'ComparisonOperator' => 'NULL' }
+          }
+        })
+      end
     end
 
   end
