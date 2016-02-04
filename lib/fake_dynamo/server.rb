@@ -13,16 +13,11 @@ module FakeDynamo
       begin
         data = JSON.parse(request.body.read)
         operation = extract_operation(request.env)
-        STDERR.puts "operation #{operation}"
-        STDERR.puts "data"
-        STDERR.puts data.inspect
         response = db.process(operation, data)
         storage.persist(operation, data)
       rescue FakeDynamo::Error => e
         response, status = e.response, e.status
       end
-      STDERR.puts "response"
-      STDERR.puts response.inspect
       [status, response.to_json]
     end
 
