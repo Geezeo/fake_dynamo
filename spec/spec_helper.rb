@@ -1,7 +1,10 @@
 $: << File.join(File.dirname(File.dirname(__FILE__)), "lib")
 
 require 'simplecov'
-SimpleCov.start if ENV['COVERAGE']
+SimpleCov.start do
+  add_filter '/bin/'
+  add_filter '/spec/'
+end
 
 require 'rspec'
 require 'rack/test'
