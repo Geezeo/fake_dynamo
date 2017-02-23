@@ -1,7 +1,8 @@
 module FakeDynamo
   class Error < ::StandardError
 
-    class_attribute :description, :type, :status
+    class_attribute :description, :type
+    class_attribute :status, instance_reader: false
 
     self.type = 'com.amazonaws.dynamodb.v20120810'
     self.status = 400

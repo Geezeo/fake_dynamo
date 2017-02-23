@@ -19,15 +19,12 @@ module FakeDynamo
     let(:app) { Server.new }
     let(:server) { Server.new! }
 
-    after(:all) do
-      server.storage.reset
-    end
-
     it "should extract_operation" do
       server.extract_operation('HTTP_X_AMZ_TARGET' => 'DynamoDB_20111205.CreateTable').should eq('CreateTable')
       expect {
         server.extract_operation('HTTP_X_AMZ_TARGET' => 'FakeDB_20111205.CreateTable')
       }.to raise_error(UnknownOperationException)
+      server.storage.reset
     end
 
     it "should send operation to db" do
@@ -43,17 +40,17 @@ module FakeDynamo
 
     it "should reset database" do
       post '/', {}.to_json, 'HTTP_X_AMZ_TARGET' => 'DynamoDB_20111205.ListTables'
-      JSON.parse(last_response.body)["TableNames"].size.should == 1
+      JSON.parse(last_response.body)["TableNames"].size.should eq(1)
 
       delete '/'
       last_response.should be_ok
 
       post '/', {}.to_json, 'HTTP_X_AMZ_TARGET' => 'DynamoDB_20111205.ListTables'
-      JSON.parse(last_response.body)["TableNames"].size.should == 0
+      JSON.parse(last_response.body)["TableNames"].size.should eq(0)
 
       post '/', data.to_json, 'HTTP_X_AMZ_TARGET' => 'DynamoDB_20111205.CreateTable'
       post '/', {}.to_json, 'HTTP_X_AMZ_TARGET' => 'DynamoDB_20111205.ListTables'
-      JSON.parse(last_response.body)["TableNames"].size.should == 1
+      JSON.parse(last_response.body)["TableNames"].size.should eq(1)
     end
 
   end

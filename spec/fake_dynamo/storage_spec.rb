@@ -19,7 +19,7 @@ module FakeDynamo
         'Item' => { 'id' => { 'S' => (i % 100).to_s },
           'name' => { 'S' => "╩tr¥in" },
           'binary' => { 'B' => Base64.strict_encode64("binary") },
-          'binary' => { 'BS' => [Base64.strict_encode64("binary")] }}
+          'binaryset' => { 'BS' => [Base64.strict_encode64("binary")] }}
       }
     end
 

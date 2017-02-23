@@ -59,12 +59,16 @@ module FakeDynamo
 
     def [](name)
       return @primary if @primary.name == name
+      @range ||= nil
       return @range if @range and @range.name == name
       nil
     end
 
     def eql?(key)
       return false unless key.kind_of? Key
+
+      @range ||= nil
+      @tertiary ||= nil
 
       @primary == key.primary &&
         @range == key.range &&
@@ -77,9 +81,11 @@ module FakeDynamo
 
     def as_hash
       result = @primary.as_hash
+      @range ||= nil
       if @range
         result.merge!(@range.as_hash)
       end
+      @tertiary ||= nil
       if @tertiary
         result.merge!(@tertiary.as_hash)
       end

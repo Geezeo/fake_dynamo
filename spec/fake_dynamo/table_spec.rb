@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rspec/its'
 
 module FakeDynamo
   class ValidationTest
@@ -72,7 +73,7 @@ module FakeDynamo
 
     subject { Table.new(data) }
 
-    its(:status) { should == 'CREATING' }
+    its(:status) { should eq('CREATING') }
     its(:creation_date_time) { should_not be_nil }
 
     context '#update' do
@@ -85,8 +86,8 @@ module FakeDynamo
         table
       end
 
-      its(:read_capacity_units) { should == 10 }
-      its(:write_capacity_units) { should == 15 }
+      its(:read_capacity_units) { should eq(10) }
+      its(:write_capacity_units) { should eq(15) }
       its(:last_increased_time) { should be_a_kind_of(Integer) }
       its(:last_decreased_time) { should be_nil }
     end
@@ -251,7 +252,7 @@ module FakeDynamo
 
       it 'should putitem in the table' do
         subject.put_item(item)
-        subject.items.size.should == 1
+        subject.items.size.should eq(1)
       end
 
       context 'Expected & ReturnValues' do
@@ -291,7 +292,7 @@ module FakeDynamo
           new_item = Utils.deep_copy(item)
           new_item['Item']['score'] = { 'N' => "17" }
           new_item.merge!({'ReturnValues' => 'ALL_OLD'})
-          subject.put_item(new_item)['Attributes'].should == old_item['Item']
+          subject.put_item(new_item)['Attributes'].should eq(old_item['Item'])
         end
       end
     end
@@ -343,7 +344,7 @@ module FakeDynamo
         response_1 = subject.delete_item(key)
         response_2 = subject.delete_item(key)
 
-        response_1.should == response_2
+        response_1.should eq(response_2)
       end
 
       it 'should check conditions' do
@@ -655,7 +656,7 @@ module FakeDynamo
 
       it 'should return lastevaluated key' do
         result = subject.query(query)
-        result['LastEvaluatedKey'].should == {"name"=>{"S"=>"att1"}, "age"=>{"N"=>"11"}}
+        result['LastEvaluatedKey'].should eq({"name"=>{"S"=>"att1"}, "age"=>{"N"=>"11"}})
         result = subject.query(query.merge('Limit' => 100))
         result['LastEvaluatedKey'].should be_nil
 
@@ -885,7 +886,7 @@ module FakeDynamo
       it 'should return lastevaluated key' do
         scan['Limit'] = 5
         result = subject.scan(scan)
-        result['LastEvaluatedKey'].should == {"name"=>{"S"=>"att1"}, "age"=>{"N"=>"9"}}
+        result['LastEvaluatedKey'].should eq({"name"=>{"S"=>"att1"}, "age"=>{"N"=>"9"}})
         result = subject.scan(scan.merge('Limit' => 100))
         result['LastEvaluatedKey'].should be_nil
 

@@ -76,8 +76,8 @@ module FakeDynamo
             end
           when :structure
             structure = constrain[:structure]
-            structure.each do |attribute, spec|
-              validate_spec(attribute, data[attribute], spec, parents + ["member"])
+            structure.each do |structure_attribute, structure_spec|
+              validate_spec(structure_attribute, data[structure_attribute], structure_spec, parents + ["member"])
             end
           when :map
             map = constrain[:map]

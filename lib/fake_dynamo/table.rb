@@ -8,6 +8,8 @@ module FakeDynamo
                   :key_schema, :items, :size_bytes, :local_secondary_indexes, :global_secondary_indexes
 
     def initialize(data)
+      @global_secondary_indexes ||= nil
+      @local_secondary_indexes ||= nil
       extract_values(data)
       init
     end

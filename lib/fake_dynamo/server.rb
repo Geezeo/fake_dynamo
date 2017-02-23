@@ -40,7 +40,7 @@ module FakeDynamo
     end
 
     def extract_operation(env)
-      if env['HTTP_X_AMZ_TARGET'] =~ /DynamoDB_\d+\.([a-zA-z]+)/
+      if env['HTTP_X_AMZ_TARGET'] =~ /DynamoDB_\d+\.([a-zA-Z]+)/
         $1
       else
         raise UnknownOperationException
